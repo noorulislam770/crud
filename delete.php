@@ -15,7 +15,7 @@
                     <small id="helpId" class="form-text text-muted">ID</small>
                 </div>
                 
-                <input name="delete" id="delete" class="btn btn-primary" type="submit" value="Delete Student">
+                <input name="delete" id="delete" class="btn btn-danger" type="submit" value="Delete Student">
             
             </form>
 

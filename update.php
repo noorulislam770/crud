@@ -9,6 +9,11 @@
 
             <form method="post" action="server.php">
                 <div class="form-group">
+                    <label for="studentId">Student ID</label>
+                    <input type="number" class="form-control" name="studentId" id="studentId" aria-describedby="helpId" placeholder="Student ID">
+                    <small id="helpId" class="form-text text-muted">ID</small>
+                </div>
+                <div class="form-group">
                     <label for="studentName">Name</label>
                     <input type="text" class="form-control" name="studentName" id="studentName" aria-describedby="helpId" placeholder="Your Name">
                     <small id="helpId" class="form-text text-muted">Name</small>

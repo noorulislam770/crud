@@ -10,21 +10,21 @@
             <form method="post" action="server.php">
                 <div class="form-group">
                     <label for="studentName">Name</label>
-                    <input type="text" class="form-control" name="studentName" id="studentName" aria-describedby="helpId" placeholder="Your Name">
+                    <input required  type="text" class="form-control" name="studentName" id="studentName" aria-describedby="helpId" placeholder="Your Name">
                     <small id="helpId" class="form-text text-muted">Name</small>
                 </div>
                 <div class="form-group">
                     <label for="fatherName">Father Name</label>
-                    <input type="text" class="form-control" name="fatherName" id="fatherName" aria-describedby="helpId" placeholder="Father Name">
+                    <input required  type="text" class="form-control" name="fatherName" id="fatherName" aria-describedby="helpId" placeholder="Father Name">
                     <small id="helpId" class="form-text text-muted">Father Name</small>
                 </div>
                 <div class="form-group">
                     <label for="dob">Date of Birth</label>
-                <input type="date" class="form-control" name="dob" id="dob" >
+                <input required type="date" class="form-control" name="dob" id="dob" >
                 </div>
                 <div class="form-group">
                     <label for="class">Class</label>
-                    <input type="number" class="form-control" name="class" id="class" placeholder="1-10">
+                    <input required type="number" class="form-control" name="class" id="class" placeholder="1-10">
                 </div>
                 <input name="create" id="create" class="btn btn-primary" type="submit" value="Create Student">
             
