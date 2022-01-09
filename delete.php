@@ -8,10 +8,10 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
 
-            <form method="post" action="server.php">
+            <form method="get" action="server.php">
                 <div class="form-group">
                     <label for="studentId">Student.ID Number</label>
-                    <input type="number" class="form-control" name="studentId" id="studentId" aria-describedby="helpId" placeholder="Student ID">
+                    <input type="number" class="form-control" required name="studentId" id="studentId" aria-describedby="helpId" placeholder="Student ID">
                     <small id="helpId" class="form-text text-muted">ID</small>
                 </div>
                 

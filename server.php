@@ -179,24 +179,29 @@ if(isset($_POST['update'])){
 
 
 
-if(isset($_POST['delete'])){
-    $id = $_POST['studentId'];
+if(isset($_GET['delete'])){
+    $id = $_GET['studentId'];
     $tempSql = "SELECT * FROM students WHERE id=$id ";
             // echo "Sql " . $tempSql;
             $tempResult = $conn->query($tempSql);
             $stId = 0 ;
-            if($tempResult->num_rows > 0){
+            if($tempResult-> num_rows > 0){
                 while($tempRow =  $tempResult->fetch_assoc()){
                     $stId = $tempRow['id'];
+                    echo '<h1 class="text-center"> Confirm Deletion! </h1>';
                     displayForm($tempRow['id'],$tempRow['name'],$tempRow['fathername'],$tempRow['dob'],$tempRow['class']);
                 }
+                echo '
+                <form action="server.php" method="post">
+                <input type="number"  name="delStdId" class="form-control"  value='. $id .'>
+                <input name="confirmDelete" id="confrimDelete" class="btn btn-danger mt-2" type="submit" value="Delete Student!">
+                    <a class= "btn btn-success mt-2" href="delete.php">Go Back</a> 
+                </form>
+                ';
             }
-            echo '
-            <form action="server.php" method="post">
-            <input type="number"  name="delStdId" class="form-control"  value='. $id .'>
-            <input name="confirmDelete" id="confrimDelete" class="btn btn-danger" type="submit" value="Delete Student!">
-            </form>
-            ';
+            else {
+                showError("Invalid Id","Student with that id doesnt exists to delete.","delete");
+            }
 
     
 
@@ -228,20 +233,89 @@ if (isset($_POST['confirmDelete'])){
 
 
 if(isset($_POST['read'])){
-    $id = $_POST['studentId'];
-    $tempSql = "SELECT * FROM students WHERE id=$id ";
-            // echo "Sql " . $tempSql;
-            $tempResult = $conn->query($tempSql);
-            $stId = 0 ;
-            if($tempResult->num_rows > 0){
-                while($tempRow =  $tempResult->fetch_assoc()){
-                    $stId = $tempRow['id'];
-                    displayForm($tempRow['id'],$tempRow['name'],$tempRow['fathername'],$tempRow['dob'],$tempRow['class']);
-                }
-            }
+    // var_dump($_POST);
+    if ($_POST['studentId'] != ""){
+
+        $id = $_POST['studentId'];
+        $tempSql = "SELECT * FROM students WHERE id=$id ";
+        // echo "Sql " . $tempSql;
+        $tempResult = $conn->query($tempSql);
+        $stId = 0 ;
+        if($tempResult->num_rows > 0){
+            renderTable($tempResult);
+
+        }
+        else{
+            showError("Invalid Student ID","No student with that id is available","read");
+        }
+    }
+    else if ($_POST['name'] != ""){
+        $name = $_POST['name'];
+        $tempSql = "SELECT * FROM students WHERE name LIKE '%$name%' ";
+        // echo "Sql " . $tempSql;
+        $tempResult = $conn->query($tempSql);
+        $stId = 0 ;
+        if($tempResult->num_rows > 0){
+            renderTable($tempResult);
+        }
+        else{
+            showError("Invalid Student ID","No student with that id is available","read");
+        }
+    }else{
+        showError("Empty Request","Either Enter a Student name or student ID","read");
+    }
+}
+
+function renderTable($tempResult){
+    
+    echo'
+    <div class="container">
+    <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Studdent ID </th>
+      <th scope="col">Name</th>
+      <th scope="col">Father Name</th>
+      <th scope="col">DOB</th>
+      <th scope="col">Class</th>
+      <th scope="col">Update</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>';
+        while($tempRow =  $tempResult->fetch_assoc()){
+            echo '<tr>
+            <th scope="row">'.$tempRow['id'].'</th>
+            <td>'.$tempRow['name'].'</td>
+            <td>'.$tempRow['fathername'].'</td>
+            <td>'.$tempRow['dob'].'</td>
+            <td>'.$tempRow['class'].'</td>
+            <td><a href="update.php?studentId='.$tempRow['id'].'&read=Show+Student">Update </a></td>
+            <td><a href="server.php?studentId='.$tempRow['id'].'&delete=Delete+Student">Delete </a></td>
+        </tr>';
+        }
+    echo '</tbody>
+        </div>
+    ';
+}
+
+function showError($title,$message,$page){
+    echo '
+        <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+        <div class="card-header">Danger</div>
+        <div class="card-body">
+        <h5 class="card-title">'.$title.'</h5>
+        <p class="card-text">'.$message.'</p>
+        <a href="'.$page.'.php" class="btn btn-primary mt-2" > Go Back </a>
+
+    </div>
+  </div>    
+    ';
 }
 
 ?>
+
+
 
 </div>
         <div class="col-md-2"></div>
